@@ -7,12 +7,10 @@ import random
 def build_game_word_instance():
     '''Build the game word and dictionaries that will be used'''
     if len(game_word) == 0:
-        word_list = ["beneficial",
-                    "excellent",
-                    "blackberry",
-                    "facetious",
-                    "areious",
-                    "tragediously"]
+        word_list = ["beneficial", "excellent", "blackberry", "facetious",
+                    "areious", "tragediously", "vigorously", "nocturnal",
+                    "trebuchet", "powerful", "questionable", "pizzaria",
+                    "monumental", "galantry", "capricious", "vacillation"]
         
         word = random.choice(word_list)
         word_index = 0
