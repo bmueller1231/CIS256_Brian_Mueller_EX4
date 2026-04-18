@@ -1,6 +1,7 @@
 # Brian Mueller
 # CIS256 Spring 2026
-# Part 2 - Writing the Game (Hangman)
+# Exercise Assignment 4
+# Writing the Game (Hangman)
 
 import random
 
