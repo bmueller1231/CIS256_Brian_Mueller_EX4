@@ -23,7 +23,16 @@ def build_game_word_instance():
                 word_index += 1
     else:
         print("This game already has a word")
+
+def end_game():
+    if "_" not in guess_word.values():
+        print(f"You win")
+        return "break"   
     
+    if wrong_guesses >= 6:
+        print(f"You lose.  The word was {''.join(game_word.values())}")
+        return "break"
+
 
 
 
@@ -35,14 +44,7 @@ wrong_guesses = 0
 build_game_word_instance()
 
 while True:
-    
-    if "_" not in guess_word.values():
-        print(f"You win")
-        break
-
-    if wrong_guesses >= 6:
-        print(f"You lose.  The word was {''.join(game_word.values())}")
-        break
+    end_game(wrong_guesses)
         
     guess_letter = input("Enter a letter: ").upper()
     
@@ -59,19 +61,15 @@ while True:
 
     guessed_letters.append(guess_letter)
 
-
-    if guess_letter in game_word:
+    if guess_letter in game_word.values():
         for index, letter in game_word.items():
             if letter == guess_letter:
                 guess_word[index] = guess_letter
                 
-                print("".join(guess_word.values()))
-                print("".join(game_word.values()))
+        print("".join(guess_word.values()))
     else:
         print("wrong letter")
         wrong_guesses += 1
-
-print(game_word)
 
 
 
