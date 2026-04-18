@@ -23,49 +23,95 @@ def build_game_word_instance():
                 word_index += 1
     else:
         print("This game already has a word")
+
+def letter_validation(guess_letter):
+    if guess_letter in guessed_letters:
+        print("You already guessed this letter.  Try again\n")
+        return "continue"
+
+    if len(guess_letter) != 1:
+        print("Please enter a single letter.")
+        return "continue"
     
+    if not guess_letter.isalpha():
+        print("Please enter a letter")
 
+def word_check(guess_letter):
+    if guess_letter in game_word.values():
+        for index, letter in game_word.items():
+            if letter == guess_letter:
+                guess_word[index] = guess_letter
+        print(f"\nLetter {guess_letter} is in the word")       
+        print("".join(guess_word.values()))
+    else:
+        global wrong_guesses 
+        wrong_guesses += 1
+        print(f"\nLetter {guess_letter} is not in the word")
+        print("".join(guess_word.values()))
 
+def end_game(wrong_guesses):
+    if "_" not in guess_word.values():
+        print(f"You win!")
+        print(f"The word was {''.join(game_word.values())}\n")
+        return True
+        return True   
+    
+    if wrong_guesses >= 6:
+        print(f"You lose!")  
+        print(f"The word was {''.join(game_word.values())}\n")
+        return True
+    
+    return False
+
+def reset_game():
+    """Resets all game data for a fresh start."""
+    global wrong_guesses, guessed_letters, game_word, guess_word
+    game_word.clear()
+    guess_word.clear()
+    guessed_letters = []
+    wrong_guesses = 0
+
+def play_again():
+    while True:
+        allowed = ("yes", "no", "y", "n")
+        yn = input("Would you like to play again?").lower()
+        if yn in allowed:
+            if yn == "yes" or yn == "y":
+                return True
+            if yn == "no" or yn =="n":
+                return False
+        else:
+            print("Please answer yes or no.")
+
+def main():
+    while True:
+        reset_game()
+        build_game_word_instance()
+
+        while True:
+            if end_game(wrong_guesses):
+                break
+                
+            guess_letter = input("Enter a letter: ").upper()
+            
+            if letter_validation(guess_letter) == "continue":
+                continue
+
+            guessed_letters.append(guess_letter)
+
+            word_check(guess_letter)
+            output_letters = ", ".join(guessed_letters)
+            print(f"You have guessed letters: {output_letters}")
+            print(f"You have {6 - wrong_guesses} wrong gesses reamaining.\n")
+
+        if not play_again():
+            print("Goodbye")
+            break
 
 game_word = {}
 guess_word  = {}
 guessed_letters = []
 wrong_guesses = 0
 
-build_game_word_instance()
-
-while True:
-    if "_" in guess_word.values() and wrong_guesses < 6:
-        guess_letter = input("Enter a letter: ").upper()
-        if guess_letter in guessed_letters:
-            print("You already guessed this letter.  Try again")
-        else:
-            guessed_letters.append(guess_letter)
-    
-    if wrong_guesses < 6:
-        if guess_letter not in game_word.values():
-            print("wrong letter")
-            wrong_guesses += 1
-    else:
-        print("You lose")
-        break
-    if guess_letter in game_word:
-        for key in game_word:
-            if key.values() == guess_letter:
-                guess_word[key] = key.values()
-                for v in guess_word.values():
-                    gword = gword + str(v)
-                    print(gword)
-
-    
-
-
-
-
-
-
-print(game_word)
-
-
-
-
+if __name__ == "__main__":
+    main()
