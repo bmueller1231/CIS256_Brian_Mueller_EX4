@@ -35,34 +35,41 @@ wrong_guesses = 0
 build_game_word_instance()
 
 while True:
-    if "_" in guess_word.values() and wrong_guesses < 6:
-        guess_letter = input("Enter a letter: ").upper()
-        if guess_letter in guessed_letters:
-            print("You already guessed this letter.  Try again")
-        else:
-            guessed_letters.append(guess_letter)
     
-    if wrong_guesses < 6:
-        if guess_letter not in game_word.values():
-            print("wrong letter")
-            wrong_guesses += 1
-    else:
-        print("You lose")
+    if "_" not in guess_word.values():
+        print(f"You win")
         break
-    if guess_letter in game_word:
-        for key in game_word:
-            if key.values() == guess_letter:
-                guess_word[key] = key.values()
-                for v in guess_word.values():
-                    gword = gword + str(v)
-                    print(gword)
 
+    if wrong_guesses >= 6:
+        print(f"You lose.  The word was {''.join(game_word.values())}")
+        break
+        
+    guess_letter = input("Enter a letter: ").upper()
     
+    if guess_letter in guessed_letters:
+        print("You already guessed this letter.  Try again")
+        continue
+
+    if len(guess_letter) != 1:
+        print("Please enter a single letter.")
+        continue
+    
+    if not guess_letter.isalpha():
+        print("Please enter a letter")
+
+    guessed_letters.append(guess_letter)
 
 
-
-
-
+    if guess_letter in game_word:
+        for index, letter in game_word.items():
+            if letter == guess_letter:
+                guess_word[index] = guess_letter
+                
+                print("".join(guess_word.values()))
+                print("".join(game_word.values()))
+    else:
+        print("wrong letter")
+        wrong_guesses += 1
 
 print(game_word)
 
