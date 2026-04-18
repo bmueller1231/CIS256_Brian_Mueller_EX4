@@ -7,6 +7,10 @@ import unittest
 import guess_the_word
 
 class TestTheGame(unittest.TestCase):
+
+    def setUp(self):
+        guess_the_word.reset_game()
+    
     def test_word_selection_from_list(self):
         '''Test that the word comes from a list of values'''
         
